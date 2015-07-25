@@ -28,7 +28,6 @@
     };
 
     karma.start = self.start;
-    karma.loaded = self.noop;
     window.dump = self.dump;
 
     return self;

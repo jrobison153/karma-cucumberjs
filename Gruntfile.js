@@ -30,7 +30,7 @@ module.exports = function (grunt) {
       jasmine: {
         configFile: "karma.conf.js",
         singleRun: true,
-        browsers: ["Chrome", "Firefox", "Safari"]
+        browsers: ["Chrome"]
       },
 
       cuke_once: {
@@ -65,6 +65,19 @@ module.exports = function (grunt) {
           fileExclusionRegExp: /^\.|\.md$/,
           out: './lib/adapter.js'
         }
+      },
+      adapter_dev: {
+        options: {
+          optimizeCss: false,
+          baseUrl: './source',
+          deps: "<%= files.requirejs_dependencies %>",
+          name: 'main',
+          optimize: 'none',
+          inlineText: false,
+          isBuild: true,
+          fileExclusionRegExp: /^\.|\.md$/,
+          out: './lib/adapter.js'
+        }
       }
     },
 
@@ -82,7 +95,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-karma");
 
   grunt.registerTask('tests', ['jshint', 'karma:jasmine', 'karma:cuke_once']);
-  grunt.registerTask("default", ["jshint", "karma:jasmine", "requirejs", 'karma:cuke_once']);
+  grunt.registerTask("default", ["jshint", "karma:jasmine", "requirejs:adapter", 'karma:cuke_once']);
   grunt.registerTask("build_dev", ["jshint", "karma:jasmine", "requirejs:adapter_dev", 'karma:cuke_once']);
   grunt.registerTask('dev', ['default', 'watch']);
 };
